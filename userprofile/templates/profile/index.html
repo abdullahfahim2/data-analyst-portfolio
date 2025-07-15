@@ -1,0 +1,711 @@
+{% extends "profile/base.html" %}
+{% block title %}{{ profile.name }} | {{ profile.title }} {% endblock title %}
+
+{% block content %}
+<!-- Hero Section -->
+<section id="hero" class="py-16 md:py-24 lg:py-32 text-white min-h-[100vh] flex items-center relative overflow-hidden">
+    <!-- Background Carousel -->
+    <div class="absolute inset-0 z-0 container mx-auto">
+        <div class="relative h-full w-full">
+            <!-- Carousel Slides - Dynamic -->
+            {% for bg_image in background_images %}
+            <div class="absolute inset-0 transition-opacity duration-1000 ease-in-out {% if forloop.first %}opacity-100{% else %}opacity-0{% endif %}"
+                id="slide{{ forloop.counter }}">
+                <div class="absolute inset-0 bg-black opacity-70"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-900 to-purple-900 opacity-50"></div>
+                <img src="{{ bg_image.image.url }}" alt="{{ bg_image.name }}" class="w-full h-full object-cover">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="container mx-auto lg:px-20 px-4 py-16 sm:px-6 relative z-10">
+        <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-8 md:mb-0">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">Hi, I'm <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 animate-gradient">
+                        {{ profile.name }}
+                    </span></h1>
+                <h2 class="text-xl md:text-2xl lg:text-3xl font-semibold text-blue-200 mb-6">
+                    {{ profile.title }}
+                </h2>
+                <div class="flex flex-col sm:flex-row gap-4 mb-12">
+                    <div class="flex justify-around gap-4">
+                        {% if profile.linkedin %}
+                        <a href="{{ profile.linkedin }}" target="_blank" rel="noopener noreferrer"
+                            class="bg-white hover:bg-gray-800 text-gray-800 hover:text-white font-semibold py-3 px-4 rounded-lg transition duration-300 text-center shadow-md hover:scale-110 hover:shadow-lg">
+                            <i class="fab fa-linkedin-in text-lg"></i>
+                        </a>
+                        {% endif %}
+
+                        {% if profile.twitter %}
+                        <a href="{{ profile.twitter }}" target="_blank" rel="noopener noreferrer"
+                            class="bg-white hover:bg-gray-800 text-gray-800 hover:text-white font-semibold py-3 px-4 rounded-lg transition duration-300 text-center shadow-md hover:scale-110 hover:shadow-lg">
+                            <i class="fab fa-twitter text-lg"></i>
+                        </a>
+                        {% endif %}
+
+                        {% if profile.github %}
+                        <a href="{{ profile.github }}" target="_blank" rel="noopener noreferrer"
+                            class="bg-white hover:bg-gray-800 text-gray-800 hover:text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 text-center shadow-md hover:scale-110 hover:shadow-lg">
+                            <i class="fab fa-github text-lg"></i>
+                        </a>
+                        {% endif %}
+
+                        {% if profile.orcid %}
+                        <a href="{{ profile.orcid }}" target="_blank" rel="noopener noreferrer"
+                            class="bg-white hover:bg-gray-800 text-gray-800 hover:text-white font-semibold py-3 px-4 rounded-lg transition duration-300 text-center shadow-md hover:scale-110 hover:shadow-lg">
+                            <i class="fab fa-orcid text-lg"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                    <a href="#projects"
+                        class="border-2 md:hidden lg:block border-white text-white hover:bg-white hover:text-gray-900 font-semibold py-3 px-6 rounded-lg transition duration-300 text-center shadow-md">
+                        View My Work
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <div class="relative">
+                    {% if profile.profile_image %}
+                    <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}"
+                        class="rounded-xl shadow-xl w-full max-w-md border-8 border-gray-700">
+                    {% endif %}
+                    <div
+                        class="absolute -bottom-4 -right-4 bg-black bg-opacity-70 backdrop-blur-sm p-3 rounded-lg shadow-lg border border-gray-600 border-opacity-20">
+                        <div class="flex items-center">
+                            <div class="bg-white bg-opacity-20 p-2 rounded-full mr-2">
+                                <i class="fas fa-chart-line text-white text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-300">Currently working on</p>
+                                <p class="font-semibold text-sm text-white">
+                                    {{ profile.current_project }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SVG Shape Divider -->
+    <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-[2]">
+        <svg class="w-full h-[44px] md:h-[69px] lg:h-[86px] xl:h-[calc(2vw+86px)]" viewBox="0 0 35.28 2.17"
+            preserveAspectRatio="none">
+            <path d="M35.28 1.67c-3.07-.55-9.27.41-16.15 0-6.87-.4-13.74-.58-19.13.1v.4h35.28z"
+                class="fill-[#111827]" />
+            <path
+                d="M35.28 1.16c-3.17-.8-7.3.4-10.04.56-2.76.17-9.25-1.47-12.68-1.3-3.42.16-4.64.84-7.04.86C3.12 1.31 0 .4 0 .4v1.77h35.28z"
+                class="fill-[#111827] opacity-50" />
+            <path
+                d="M35.28.31c-2.57.84-7.68.3-11.8.43-4.1.12-6.85.61-9.57.28C11.18.69 8.3-.16 5.3.02 2.3.22.57.85 0 .87v1.2h35.28z"
+                class="fill-[#111827] opacity-50" />
+        </svg>
+    </div>
+</section>
+
+<!-- About Me Section -->
+<section id="about" class="py-16 md:py-24 bg-gray-900">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title animate-fade-in-up">
+                Professional Profile
+            </h2>
+            <p class="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed animate-delayed-fade-in">
+                {{ profile.short_bio | safe }}
+            </p>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-12 items-center">
+            <!-- Octagonal profile image -->
+            <div class="lg:w-2/5 flex justify-center relative">
+                <div class="octagon-shape relative group">
+                    {% if profile.profile_image %}
+                    <img src="{{ profile.about_image.url }}" alt="{{ profile.name }}" class="octagon-img">
+                    {% endif %}
+                </div>
+
+                <!-- Experience badge -->
+                <div class="absolute -bottom-4 -right-4 bg-gray-800 p-3 rounded-lg shadow-lg border border-gray-700">
+                    <div class="flex items-center">
+                        <div class="bg-blue-900 p-2 rounded-full mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-400 font-medium tracking-wider">EXPERIENCE</p>
+                            <p class="font-bold text-white">
+                                {% if profile.years_experience %}
+                                {{ profile.years_experience }}+ Years
+                                {% else %}
+                                5+ Years
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professional Content -->
+            <div class="lg:w-3/5">
+                <div class="space-y-4 text-gray-400 mb-8">
+                    {{ profile.long_bio | safe | linebreaks }}
+                </div>
+
+                <div class="flex flex-wrap gap-4">
+                    {% if profile.resume %}
+                    <a href="{{ profile.resume.url }}"
+                        class="bg-blue-600 text-white font-medium py-3 px-6 rounded-md transition-colors duration-300 inline-flex items-center shadow-md hover:bg-blue-700"
+                        download>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Download CV
+                    </a>
+                    {% endif %}
+
+                    <a href="#contact"
+                        class="border-2 border-blue-600 text-blue-400 font-medium py-3 px-6 rounded-md transition-colors duration-300 inline-flex items-center shadow-sm hover:bg-gray-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                        </svg>
+                        Contact Me
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mail Account Section -->
+<section class="py-12 bg-gray-900">
+    <div class="container mx-auto px-4 sm:px-6">
+        <div class="glass-card rounded-xl shadow-sm p-6 text-center max-w-4xl mx-auto">
+            <div class="flex justify-center mb-4">
+                <div class="bg-blue-900 p-3 rounded-full">
+                    <i class="fas fa-envelope text-blue-400 text-xl"></i>
+                </div>
+            </div>
+            <h3 class="text-xl md:text-2xl font-semibold text-white mb-2">Mail Account</h3>
+            <p class="text-gray-400 mb-4">For professional inquiries, collaborations, or opportunities, please reach out
+                via email:</p>
+
+            {% if profile.email %}
+            <a href="mailto:{{ profile.email }}"
+                class="text-lg md:text-xl font-medium text-blue-400 hover:text-blue-300 transition">
+                {{ profile.email }}
+            </a>
+            {% endif %}
+
+            <div class="mt-4 flex justify-center space-x-3">
+                {% if profile.linkedin %}
+                <a href="{{ profile.linkedin }}" target="_blank"
+                    class="bg-gray-800 hover:bg-blue-600 p-2 rounded-full transition">
+                    <i class="fab fa-linkedin-in text-gray-300"></i>
+                </a>
+                {% endif %}
+
+                {% if profile.github %}
+                <a href="{{ profile.github }}" target="_blank"
+                    class="bg-gray-800 hover:bg-blue-600 p-2 rounded-full transition">
+                    <i class="fab fa-github text-gray-300"></i>
+                </a>
+                {% endif %}
+
+                {% if profile.twitter %}
+                <a href="{{ profile.twitter }}" target="_blank"
+                    class="bg-gray-800 hover:bg-blue-600 p-2 rounded-full transition">
+                    <i class="fab fa-twitter text-gray-300"></i>
+                </a>
+                {% endif %}
+
+                {% if profile.kaggle %}
+                <a href="{{ profile.kaggle }}" target="_blank"
+                    class="bg-gray-800 hover:bg-blue-600 p-2 rounded-full transition">
+                    <i class="fab fa-kaggle text-gray-300"></i>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Education and Certifications Section -->
+<section class="py-20 section-bg">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-white mb-4 section-title">Education & Certifications</h2>
+            <p class="text-gray-400 max-w-3xl mx-auto">My academic background and professional certifications that
+                validate my expertise in data analysis and machine learning.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Education -->
+            <div class="glass-card rounded-xl p-8 shadow-sm">
+                <h3 class="text-xl font-semibold text-white mb-6 flex items-center">
+                    <i class="fas fa-graduation-cap text-blue-400 mr-3"></i> Education
+                </h3>
+
+                <div class="space-y-6 relative border-l-2 border-gray-700 pl-8">
+                    {% for education in educations %}
+                    <div class="relative timeline-item">
+                        <div class="absolute w-4 h-4 bg-blue-600 rounded-full -left-8 top-1"></div>
+                        <h4 class="font-bold text-white">
+                            {{ education.degree }}
+                            {% if education.grade %}({{ education.grade }}){% endif %}
+                        </h4>
+                        <p class="text-gray-400 mb-1">
+                            {{ education.institution }} |
+                            {{ education.start_year }}
+                            {% if education.end_year %} - {{ education.end_year }}{% endif %}
+                        </p>
+                        {% if education.description %}
+                        <p class="text-gray-400">{{ education.description }}</p>
+                        {% endif %}
+                    </div>
+                    {% empty %}
+                    <p class="text-gray-400">No education information available</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Certifications -->
+            <div class="glass-card rounded-xl p-8 shadow-sm">
+                <h3 class="text-xl font-semibold text-white mb-6 flex items-center">
+                    <i class="fas fa-certificate text-blue-400 mr-3"></i> Certifications
+                </h3>
+
+                <div class="space-y-6">
+                    {% for certification in certifications %}
+                    <div class="flex">
+                        {% if certification.image %}
+                        <div class="flex-shrink-0 mr-4">
+                            <img src="{{ certification.image.url }}" alt="{{ certification.name }}"
+                                class="w-16 h-16 rounded-lg object-cover">
+                        </div>
+                        {% endif %}
+                        <div>
+                            <h4 class="font-bold text-white">{{ certification.name }}</h4>
+                            <p class="text-gray-400 mb-1">
+                                {{ certification.issuing_organization }} |
+                                {{ certification.issue_date|date:"Y" }}
+                            </p>
+                            {% if certification.credential_id %}
+                            <p class="text-gray-500 text-sm">Credential ID: {{ certification.credential_id }}</p>
+                            {% endif %}
+                            {% if certification.credential_url %}
+                            <a href="{{ certification.credential_url }}" target="_blank"
+                                class="text-blue-400 hover:text-blue-300 text-sm">
+                                View Credential
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="text-gray-400">No certifications available</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Technical Skills Section -->
+<section id="skills" class="py-20 bg-gray-900">
+    <div class="container mx-auto px-2 sm:px-4 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-white mb-4 section-title">Technical Skills</h2>
+            <p class="text-gray-400 max-w-3xl mx-auto">The tools and technologies I use to transform data into insights
+                and build intelligent systems.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {% for category in skill_categories %}
+            <div class="glass-card rounded-xl p-8 shadow-sm">
+                <div class="flex items-center mb-6">
+                    <div class="bg-{{ category.color_scheme }}-900 p-3 rounded-full mr-4">
+                        <i class="{{ category.icon_class }} text-{{ category.color_scheme }}-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white">{{ category.name }}</h3>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    {% for skill in category.skills.all %}
+                    <span
+                        class="skill-pill bg-{{ category.color_scheme }}-100 text-{{ category.color_scheme }}-600 px-4 py-2 rounded-full font-medium transition duration-300">
+                        {{ skill.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Professional Experience Section -->
+<section id="experience" class="py-20 section-bg">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-white mb-4 section-title">Professional Experience</h2>
+            <p class="text-gray-400 max-w-3xl mx-auto">My career journey and professional roles where I've applied my
+                data expertise to solve real-world problems.</p>
+        </div>
+
+        <div class="relative border-l-2 border-gray-700 pl-8 space-y-12">
+            {% for experience in experiences %}
+            <div class="relative timeline-item">
+                <div class="absolute w-4 h-4 bg-blue-600 rounded-full -left-8 top-1"></div>
+                <div class="glass-card rounded-xl p-6 shadow-sm">
+                    <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
+                        <h4 class="font-bold text-white text-lg">{{ experience.position }}</h4>
+                        <span class="bg-blue-900 text-blue-300 px-3 py-1 rounded-full text-sm font-medium">
+                            {{ experience.start_date|date:"Y" }}
+                            {% if experience.end_date %}
+                            - {{ experience.end_date|date:"Y" }}
+                            {% else %}
+                            - Present
+                            {% endif %}
+                        </span>
+                    </div>
+                    {% if experience.company %}
+                    <p class="text-gray-300 font-medium mb-3">{{ experience.company }}</p>
+                    {% endif %}
+
+                    {% if experience.description %}
+                    <div class="text-gray-400 space-y-2">
+                        {{ experience.description|safe }}
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center text-gray-400 py-8">
+                <p>No professional experience added yet.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Data Analysis Projects Section -->
+<section id="projects" class="py-20 bg-gray-900">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-white mb-4 section-title">Data Analysis Projects</h2>
+            <p class="text-gray-400 max-w-3xl mx-auto">Selected projects where I've extracted meaningful insights from
+                complex datasets to drive business decisions.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for project in projects %}
+            {% if project.category.name == 'DA' %}
+            <div
+                class="project-card glass-card rounded-xl overflow-hidden shadow-lg border border-gray-800 transition duration-300">
+                <div class="h-48 overflow-hidden">
+                    {% if project.featured_image %}
+                    <img src="{{ project.featured_image.url }}" alt="{{ project.title }}"
+                        class="w-full h-full object-cover">
+                    {% endif %}
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="font-bold text-white text-xl">{{ project.title }}</h3>
+                        {% if project.completion_date %}
+                        <span class="bg-blue-900 text-blue-300 text-xs px-2 py-1 rounded">
+                            {{ project.completion_date|date:"Y" }}
+                        </span>
+                        {% endif %}
+                    </div>
+                    {% if project.short_description %}
+                    <p class="text-gray-400 mb-4">{{ project.short_description }}</p>
+                    {% endif %}
+
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        {% for tech in project.technologies.all %}
+                        <span class="bg-blue-900 text-blue-300 text-xs px-3 py-1 rounded-full">
+                            {{ tech.name }}
+                        </span>
+                        {% endfor %}
+                    </div>
+
+                    {% if project.project_url %}
+                    <a href="{{ project.project_url }}"
+                        class="text-blue-400 font-semibold hover:underline inline-flex items-center">
+                        View Project <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+            {% empty %}
+            <div class="col-span-3 text-center py-12">
+                <p class="text-gray-400">No projects added yet.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Machine Learning Projects Section -->
+<section class="py-16 bg-gradient-to-b from-gray-900 to-gray-800">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-white mb-4 section-title">Machine Learning Innovations</h2>
+            <p class="text-gray-400 max-w-2xl mx-auto text-lg">Cutting-edge AI applications that transform data into
+                actionable insights and business value.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {% for project in projects %}
+            {% if project.category.name == 'ML' %}
+            <div
+                class="group relative bg-gray-800 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 border border-gray-700">
+                <div class="h-60 overflow-hidden relative">
+                    {% if project.featured_image %}
+                    <img src="{{ project.featured_image.url }}" alt="{{ project.title }}"
+                        class="w-full h-full object-cover">
+                    {% endif %}
+                    {% if project.completion_date %}
+                    <span class="absolute top-4 right-4 bg-gray-800/90 text-white text-xs px-3 py-1 rounded-full">
+                        {{ project.completion_date|date:"Y" }}
+                    </span>
+                    {% endif %}
+                </div>
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold text-white mb-2">{{ project.title }}</h3>
+                    {% if project.short_description %}
+                    <p class="text-gray-400 mb-5">{{ project.short_description }}</p>
+                    {% endif %}
+
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        {% for tech in project.technologies.all %}
+                        <span class="bg-blue-900 text-blue-300 text-xs px-3 py-1 rounded-full">
+                            {{ tech.name }}
+                        </span>
+                        {% endfor %}
+                    </div>
+
+                    {% if project.project_url %}
+                    <a href="{{ project.project_url }}"
+                        class="text-blue-400 font-semibold hover:underline inline-flex items-center">
+                        View Project <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+            {% empty %}
+            <div class="col-span-2 text-center py-12">
+                <p class="text-gray-400">No projects added yet.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Awards and Achievements Section -->
+<section class="py-20 bg-gray-900">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-white mb-4 section-title">Awards & Achievements</h2>
+            <p class="text-gray-400 max-w-3xl mx-auto">Recognition for my contributions to the field of data science and
+                machine learning.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for award in awards %}
+            <div class="glass-card rounded-xl p-8 shadow-sm text-center">
+                <div class="flex justify-center mb-6">
+                    <div class="bg-{{ award.get_icon_color }}-900 p-4 rounded-full">
+                        <i class="{{ award.icon_class }} text-{{ award.get_icon_color }}-400 text-2xl"></i>
+                    </div>
+                </div>
+                <h3 class="font-bold text-white text-xl mb-2">{{ award.title }}</h3>
+                <p class="text-gray-400 mb-4">{{ award.issuing_organization }}</p>
+                {% if award.issue_date %}
+                <p class="text-gray-400 mb-1">{{ award.issue_date|date:"Y" }}</p>
+                {% endif %}
+                {% if award.description %}
+                <p class="text-gray-500 text-sm">{{ award.description }}</p>
+                {% endif %}
+            </div>
+            {% empty %}
+            <div class="col-span-3 text-center py-12">
+                <p class="text-gray-400">No awards added yet.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-20 bg-gray-900">
+    <!-- Your success toast messages (appears above all content) -->
+    {% if messages %}
+    <div class="fixed top-4 right-4 z-50 space-y-3">
+        {% for message in messages %}
+        <div
+            class="{% if message.tags == 'success' %}bg-green-900{% else %}bg-red-900{% endif %} px-6 py-4 rounded-lg shadow-lg text-white flex items-start border border-opacity-20 transform transition-all duration-300 animate-fade-in-up">
+            <div class="flex-1">
+                <p class="font-medium flex items-center">
+                    {% if message.tags == 'success' %}
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    {% else %}
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    {% endif %}
+                    {{ message }}
+                </p>
+            </div>
+            <button onclick="this.parentElement.remove()" class="ml-4 text-gray-300 hover:text-white">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-white mb-4 section-title">Get In Touch</h2>
+            <p class="text-gray-400 max-w-3xl mx-auto">Have a project in mind or want to discuss potential
+                opportunities? Feel free to reach out!</p>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-12">
+            <div class="lg:w-1/2">
+                <form method="POST" class="glass-card rounded-xl shadow-sm p-8">
+                    {% csrf_token %}
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label for="id_name" class="block text-gray-300 font-medium mb-2">Your Name</label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                            <p class="text-red-400 text-sm mt-1">{{ form.name.errors.as_text }}</p>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <label for="id_email" class="block text-gray-300 font-medium mb-2">Your Email</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                            <p class="text-red-400 text-sm mt-1">{{ form.email.errors.as_text }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label for="id_subject" class="block text-gray-300 font-medium mb-2">Subject</label>
+                        {{ form.subject }}
+                        {% if form.subject.errors %}
+                        <p class="text-red-400 text-sm mt-1">{{ form.subject.errors.as_text }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="mb-6">
+                        <label for="id_message" class="block text-gray-300 font-medium mb-2">Message</label>
+                        {{ form.message }}
+                        {% if form.message.errors %}
+                        <p class="text-red-400 text-sm mt-1">{{ form.message.errors.as_text }}</p>
+                        {% endif %}
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-300 shadow-md">
+                        Send Message <i class="fas fa-paper-plane ml-2"></i>
+                    </button>
+                </form>
+            </div>
+
+            <div class="lg:w-1/2">
+                <div class="glass-card rounded-xl shadow-sm p-8 h-full">
+                    <h3 class="text-xl font-semibold text-white mb-6">Contact Information</h3>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="bg-blue-900 p-3 rounded-full mr-4 flex-shrink-0">
+                                <i class="fas fa-envelope text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-white mb-1">Email</h4>
+                                <p class="text-gray-400">{{ profile.email }}</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-blue-900 p-3 rounded-full mr-4 flex-shrink-0">
+                                <i class="fas fa-phone text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-white mb-1">Phone</h4>
+                                <p class="text-gray-400">{{ profile.phone }}</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-blue-900 p-3 rounded-full mr-4 flex-shrink-0">
+                                <i class="fas fa-map-marker-alt text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-white mb-1">Location</h4>
+                                <p class="text-gray-400">{{ profile.address }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-12">
+                        <h3 class="text-xl font-semibold text-white mb-6">Follow Me</h3>
+                        <div class="flex space-x-4">
+                            {% if profile.linkedin %}
+                            <a href="{{ profile.linkedin }}" target="_blank"
+                                class="bg-gray-800 hover:bg-blue-600 p-2 rounded-full transition">
+                                <i class="fab fa-linkedin-in text-gray-300"></i>
+                            </a>
+                            {% endif %}
+
+                            {% if profile.github %}
+                            <a href="{{ profile.github }}" target="_blank"
+                                class="bg-gray-800 hover:bg-blue-600 p-2 rounded-full transition">
+                                <i class="fab fa-github text-gray-300"></i>
+                            </a>
+                            {% endif %}
+
+                            {% if profile.twitter %}
+                            <a href="{{ profile.twitter }}" target="_blank"
+                                class="bg-gray-800 hover:bg-blue-600 p-2 rounded-full transition">
+                                <i class="fab fa-twitter text-gray-300"></i>
+                            </a>
+                            {% endif %}
+
+                            {% if profile.kaggle %}
+                            <a href="{{ profile.kaggle }}" target="_blank"
+                                class="bg-gray-800 hover:bg-blue-600 p-2 rounded-full transition">
+                                <i class="fab fa-kaggle text-gray-300"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
